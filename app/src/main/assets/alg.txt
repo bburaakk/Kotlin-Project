@@ -1,0 +1,215 @@
+public void baslat() throws IOException {
+
+        int satirSayisi = 0;
+        puan = 0;
+        bulunanKelimeSayisi = 0;
+        L8.setText("");
+        userTextYaz="";
+        doğruKelimeler="";
+        kelimeler.clear();
+        havuzKelimeler.clear();
+        karoKelimeler.clear();
+        pangramKelimeler.clear();
+        puansayisi.setText("");
+        bildirim.setText("");
+        onDeleteClick();
+
+        FileInputStream fstream;
+        try {
+            String filePathTemp = "";
+            filePathTemp = "C:\\Users\\MSI\\IdeaProjects\\JavaFx\\src\\main\\resources\\Sözlük.txt";
+
+            fstream = new FileInputStream(filePathTemp);
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String satirKelime;
+
+
+            while ((satirKelime = br.readLine()) != null) {
+                kelimeler.add(satirKelime);
+                satirSayisi++;
+            }
+            fstream.close();
+            in.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }// try-catch ile belgeden verileri uygun formatta uygun alanlara çekerken korntrol ettik
+
+        //for(int i = 0; i<satirSayisi;i++){ System.out.println(kelimeler.get(i));}//belgeyi yazdık
+        //System.out.println(kelimeler.get(0).length());
+        //kelimede kaç harf var onu buluyoruz
+        boolean[] harfler = new boolean[29];
+        int index = 0;
+        int harfSayaci=0;
+
+
+        String[] benimAlfabe = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Ö","R","S","T","U","V","Ü","İ","Y","Z","Ğ","Ç","Ş"};
+        String karoKelime ="";
+
+
+        for(int i = 0; i<satirSayisi;i++){
+            for(int j= 0; j<kelimeler.get(i).length();j++){
+                //Eğer ingilizce harfler varsa burda kontrol
+                String s = kelimeler.get(i);
+                char c = s.charAt(j);
+                //System.out.println(s.charAt(j)-'a');
+                if(c >= 'A' && c <= 'Z' ){
+                    index = c-'A';
+                }else if(c=='ü'||c=='Ü'){ index=22;}//türkçede olmayan harfleryerine(mesela x)eklemeYapıyoruz
+                else if(c=='İ'||c=='i'){ index=23;}
+                else if(c=='Ö'||c=='ö'){ index=16;}
+                else if(c=='Ğ'||c=='ğ'){ index=26;}
+                else if(c=='Ç'||c=='ç'){ index=27;}
+                else if(c=='Ş'||c=='ş'){ index=28;}
+                else if(c=='ı'){ index=8;}
+                else if(c=='â'){ index=0;}//bunuda a nın indexine koyduk
+                else if(c >= 'a' && c <='z' ){
+                    index = c-'a';
+                }
+                harfler[index]=true;
+                //System.out.println(index);
+            }//içfor
+            for(int a = 0; a< harfler.length;a++){
+
+                if (harfler[a]==true){
+                    karoKelime =karoKelime + benimAlfabe[a];//karo harflerini burda  oluşturduk tüm harfler farklı
+                    harfSayaci++;
+                }
+            }
+            if(harfSayaci==7){
+                pangramKelimeler.add(kelimeler.get(i));
+                karoKelimeler.add(karoKelime);//karo kelimelerini burda listeye ekledik
+            }
+            karoKelime="";
+            //System.out.println(harfSayaci);
+            harfSayaci=0;
+            index =0;
+
+            for(int a = 0; a< harfler.length;a++){
+               harfler[a]=false;
+            }
+        }//dış
+
+
+        do
+        {
+        //karo harflerinden hangisi çok kullanılıyor. bulup orta karoya aktarıcaz.
+        for(int p = 0;p<7;p++){
+            harfSayaclar[p]=0;
+        }// sayaclar sıfırlanıyor
+        karoIndex.clear();
+        havuzKelimeler.clear();
+        karoKelimeSayisi= (int)karoKelimeler.stream().count();
+        Random rand = new Random();
+        rastgele=  rand.nextInt(karoKelimeSayisi);
+
+
+
+        //pangram kelimelerin sayısı ve kendisinin yazdırılması
+       /*for(String s : pangramKelimeler)
+        {
+            System.out.println(s);
+        }*/
+
+
+        //kelimeler.get(0).contains(karoKelimeler.get(0).charAt(0)+"");
+        //String kelime00 = "burak";
+        //System.out.println(kelime00.contains("a"));
+
+        for(int h = 0;h<kelimeler.stream().count();h++){
+            int harfSayaci_ = 0;// kelimedeki karo harflerini sayan kısım
+            String denetimStr = kelimeler.get(h);
+            //boolean ortaHarfVarMi = false;
+
+
+            for(int b = 0;b<karoKelimeler.get(rastgele).length();b++){
+                String aranan = String.valueOf(karoKelimeler.get(rastgele).charAt(b));
+                String arananKontrol = aranan.replace("I","ı");
+                String arananKontrol2 = arananKontrol.replace("İ","i");
+                String aranacak = kelimeler.get(h);
+                /*String ortaHarf = String.valueOf(karoKelimeler.get(rastgele).charAt(6));
+                String ortaHarfKontrol = ortaHarf.replace("I","ı");
+                String ortaHarfKontrol2 = ortaHarfKontrol.replace("İ","i");*/
+
+                if(aranacak.indexOf(arananKontrol2.toLowerCase())!=-1){
+
+                    denetimStr = denetimStr.replace(arananKontrol2.toLowerCase(),"");
+                    harfSayaci_++;
+                }
+                /*if(aranacak.indexOf(ortaHarfKontrol2.toLowerCase())!=-1){
+                    ortaHarfVarMi = true;
+                }*/
+
+            }
+
+
+            if(harfSayaci_==7&& denetimStr.length()==0){
+                havuzKelimeler.add(kelimeler.get(h));
+            }
+            //else if((harfSayaci_==kelimeler.get(h).length()&&ortaHarfVarMi)&&harfSayaci_>3){
+
+            else if((harfSayaci_==kelimeler.get(h).length())&&harfSayaci_>3){
+                havuzKelimeler.add(kelimeler.get(h));
+            }
+        }
+
+            // System.out.println(havuzKelimeler.stream().count());
+            // Bunu bir düzenle
+
+        for (int c = 0;c<havuzKelimeler.size();c++){
+            for(int t = 0;t<7;t++){
+                String aranan =  String.valueOf(karoKelimeler.get(rastgele).charAt(t));
+                String arananKontrol = aranan.replace("I","ı");
+                String arananKontrol2 = arananKontrol.replace("İ","i");
+                if(havuzKelimeler.get(c).indexOf(arananKontrol2.toLowerCase())!=-1){
+                   harfSayaclar[t]++;
+                }
+            }
+        }
+
+
+        int enBüyük=0;
+        //System.out.println(harfSayaclar[0]);
+        //System.out.println("en büyük "+enBüyük);
+
+       for(int i =0;i<harfSayaclar.length;i++){
+           if(enBüyük<harfSayaclar[i]) {
+               enBüyük = harfSayaclar[i];
+               ortaHarfindex = i;
+           }
+       }
+
+        karoIndex.add(0);karoIndex.add(1);karoIndex.add(2);karoIndex.add(3);karoIndex.add(4);karoIndex.add(5);karoIndex.add(6);
+        L7.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(ortaHarfindex))+"");
+
+        karoIndex.remove(ortaHarfindex);
+
+        L1.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(0))+"");
+        L2.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(1))+"");
+        L3.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(2))+"");
+        L4.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(3))+"");
+        L5.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(4))+"");
+        L6.setText(karoKelimeler.get(rastgele).charAt(karoIndex.get(5))+"");
+
+       // System.out.println("en büyük "+enBüyük+" indexi "+ortaHarfindex);
+
+        //String konrol = "ıi".toUpperCase();
+        //System.out.println(konrol);
+
+        } while(havuzKelimeler.size()<20);
+
+        /*System.out.println(havuzKelimeler.stream().count());
+        System.out.println(pangramKelimeler.get(rastgele));
+        System.out.println(karoKelimeler.get(rastgele));*/
+
+        for(int s : harfSayaclar){
+            System.out.println(s);
+        }
+        for(String s : havuzKelimeler){
+            System.out.println(s);
+        }
+       // System.out.println(pangramKelimeler.size());
+    }

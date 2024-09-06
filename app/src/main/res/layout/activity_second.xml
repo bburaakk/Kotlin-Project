@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:background="@drawable/linear_background_anasayfa"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+
+    <ImageView
+            android:layout_width="410dp"
+            android:layout_height="390dp" app:srcCompat="@drawable/baslangicresim" android:id="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/settings"
+            android:id="@+id/settings"
+            app:cornerRadius="50dp" app:iconTint="#804747"
+            app:backgroundTint="#000000"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0.954"/>
+
+    <Button
+            android:text="Başla"
+            android:layout_width="320dp"
+            android:layout_height="70dp"
+            android:id="@+id/basla"
+            app:backgroundTint="@null"
+            android:background="@drawable/linear_background_anasayfabutton"
+            app:cornerRadius="60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/nasiloynanir" app:layout_constraintVertical_bias="0.954"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"/>
+    <Button
+            android:text="çıkış"
+            android:layout_width="150dp"
+            android:layout_height="70dp" android:id="@+id/cikis"
+            app:cornerRadius="60dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/linear_background_anasayfabutton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="140dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="140dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="52dp" app:layout_constraintHorizontal_bias="0.526"/>
+    <Button
+            android:text="nasıl oynanır"
+            android:layout_width="250dp"
+            android:layout_height="70dp" android:id="@+id/nasiloynanir"
+            app:backgroundTint="@null"
+            android:background="@drawable/linear_background_anasayfabutton"
+            app:cornerRadius="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/cikis" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="12dp"
+            app:layout_constraintHorizontal_bias="0.496"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
